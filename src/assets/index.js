@@ -1,6 +1,6 @@
-import background from './AppBg.png'
-import locationBg from './LocationBg.jpg'
-import mobileBg from './MobileBg.png'
+import background from './AppBg.webp'
+import locationBg from './LocationBg.webp'
+import mobileBg from './MobileBg.webp'
 
 export{
     background,
