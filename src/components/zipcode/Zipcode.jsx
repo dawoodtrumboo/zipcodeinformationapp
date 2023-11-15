@@ -6,8 +6,12 @@ import axios from 'axios';
 import ReactLoading from 'react-loading';
 import { BiSearch } from 'react-icons/bi';
 import DropDown from '../DropDown';
+import { gsap } from 'gsap';
 
 const Zipcode = () => {
+
+  const navigate = useNavigate();
+
 
   // Destructuring variables from the Location Context
   const {
@@ -15,7 +19,6 @@ const Zipcode = () => {
     setInputValue,
     setLoading,
     setData,
-    setError,
     loading,
     data,
     hasSearched,
@@ -26,14 +29,14 @@ const Zipcode = () => {
   } = useLocationContext();
 
   
-  const navigate = useNavigate();
+  
+
 
   // useEffect is called whenever there is a change in Loading State
   useEffect(() => {
     const handleSearch = async () => {
       try {
         const response = await axios.get(`https://api.zippopotam.us/${selectedCountry}/${inputValue}`);
-        console.log(response);
         setData(response.data);
         setTimeout(() => {
           setLoading(false);
@@ -48,14 +51,28 @@ const Zipcode = () => {
     if (inputValue && loading) {
       handleSearch();
     }
-  }, [loading, inputValue, navigate, setData, setError, setLoading, selectedCountry]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, inputValue, navigate, setData, setLoading, selectedCountry]);
+
+
+
 
   // This useEffect is called when the data has been fetched and stored in the state
   useEffect(() => {
     if (!loading && data && hasSearched) {
-      navigate('/location');
+      gsap.to('.ZipcodeAnimationClass', {
+        duration: 1, // Duration of the animation
+        opacity: 0, // Fading out
+        y: -100, // Moving up
+        ease: 'power3.inOut',
+        onComplete: () => {
+          navigate('/location'); // Navigate after animation completes
+        },
+      })
     }
   }, [loading, data, hasSearched, navigate]);
+
+
 
   // This function tracks the input of the search bar
   const handleInputChange = (e) => {
@@ -63,6 +80,9 @@ const Zipcode = () => {
     const maxValue = value.slice(0, 6);
     setInputValue(maxValue);
   };
+
+
+
 
   // This function handles the search button
   const handleSearchClick = () => {
@@ -72,9 +92,11 @@ const Zipcode = () => {
     }
   };
 
+
+
   return (
     <div
-      className=" h-screen w-full bg-cover bg-center flex flex-col items-center py-10"
+      className="ZipcodeAnimationClass h-screen w-full bg-cover bg-center flex flex-col items-center py-10"
       style={{ backgroundImage: `url(${background})` }}
     >
       <h1 className="uppercase text-white font-noto-sans ">Location Finder</h1>

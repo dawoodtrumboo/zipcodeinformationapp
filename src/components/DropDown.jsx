@@ -10,8 +10,7 @@ function classNames(...classes) {
 export default function DropDown() {
 
     const [selectedOption, setSelectedOption] = useState("Select Country")
-    const { countries, setSelectedCountry, selectedCountry, setShowAlert } = useLocationContext();
-    console.log(countries)
+    const { countries, setSelectedCountry, setShowAlert } = useLocationContext();
 
     const handleSelect = (country) => {   
 
@@ -20,8 +19,6 @@ export default function DropDown() {
         setShowAlert(false);
 
     }
-
-    console.log(selectedCountry)
 
     
   return (
