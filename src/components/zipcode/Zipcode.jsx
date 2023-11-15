@@ -6,7 +6,7 @@ import axios from 'axios';
 import ReactLoading from 'react-loading';
 import { BiSearch } from 'react-icons/bi';
 import DropDown from '../DropDown';
-import { gsap } from 'gsap';
+
 
 const Zipcode = () => {
 
@@ -60,15 +60,7 @@ const Zipcode = () => {
   // This useEffect is called when the data has been fetched and stored in the state
   useEffect(() => {
     if (!loading && data && hasSearched) {
-      gsap.to('.ZipcodeAnimationClass', {
-        duration: 1, // Duration of the animation
-        opacity: 0, // Fading out
-        y: -100, // Moving up
-        ease: 'power3.inOut',
-        onComplete: () => {
-          navigate('/location'); // Navigate after animation completes
-        },
-      })
+      navigate('/location');
     }
   }, [loading, data, hasSearched, navigate]);
 
@@ -96,7 +88,7 @@ const Zipcode = () => {
 
   return (
     <div
-      className="ZipcodeAnimationClass h-screen w-full bg-cover bg-center flex flex-col items-center py-10"
+      className=" h-screen w-full bg-cover bg-center flex flex-col items-center py-10"
       style={{ backgroundImage: `url(${background})` }}
     >
       <h1 className="uppercase text-white font-noto-sans ">Location Finder</h1>
